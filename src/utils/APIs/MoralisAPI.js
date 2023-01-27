@@ -17,39 +17,20 @@ export const getWalletNativeBalance = async (walletAddress, chain) => {
   return json
 }
 
-export const getEVMNativeBalance = async (walletAddress, isList) => {
-  if (isList === true) {
-    let balanceList = []
-    supportedChains.forEach(async (chain) => {
-      await Promise.all(
-        walletAddress.map(async (x) => {
-          const getBalance = await getWalletNativeBalance(x, chain.chainIdHex)
-          if (getBalance.status === 200) {
-            balanceList.push({ chainName: chain.networkSymbol, address: x, balance: Number(getBalance.data.balance) / 10 ** 18 })
+export const getEVMNativeBalance = async (walletAddresses) => {
+  const balanceList = await Promise.all(
+    supportedChains.map(async (chain) => {
+      return Promise.all(
+        walletAddresses.map(async (address) => {
+          const { status, data } = await getWalletNativeBalance(address, chain.chainIdHex);
+          if (status === 200) {
+            return { chainName: chain.networkSymbol, address, balance: Number(data.balance) / 10 ** 18 };
           } else {
-            return { status: 404, statusCode: 'error', errorText: 'API connection failed! try again!' }
+            throw new Error('API connection failed! try again!');
           }
         })
-      )
+      );
     })
-    return { status: 200, statusCode: 'success', data: balanceList }
-  } else {
-    supportedChains.forEach(async (chain) => {
-      const getBalance = await getWalletNativeBalance(walletAddress, chain.chainIdHex)
-      if (getBalance.status === 200) {
-        return { status: 200, statusCode: 'success', data: [{ address: walletAddress, balance: Number(getBalance.data.balance) / 10 ** 18 }] }
-      } else {
-        return { status: 404, statusCode: 'error', errorText: 'API connection failed! try again!' }
-      }
-    })
-
-    /* const getBalance = await getWalletNativeBalance(walletAddress)
-    if (getBalance.status === 200) {
-      if (Object.keys(getBalance.data.data.current_coin_balances).length > 0) {
-        return { status: 200, statusCode: 'success', data: [{ address: walletAddress, balance: Number(getBalance.data.balance) / 10 ** 18 }] }
-      }
-    } else {
-      return { status: 404, statusCode: 'error', errorText: 'API connection failed! try again!' }
-    } */
-  }
-}
+  ).then((res) => [].concat(...res));
+  return { status: 200, statusCode: 'success', data: balanceList };
+};

@@ -64,7 +64,7 @@ const Index = () => {
       </div>
       <div className='flex items-center justify-center mt-2'>
         {Object.keys(balances).length > 0 && (
-          <div className='w-full lg:w-[550px] xl:w-[600px]'>
+          <div className='w-full md:w-[550px]'>
             {balances.status === 200 ? (
               <Card>
                 <div className='overflow-y-auto'>

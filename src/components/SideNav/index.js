@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import { Transition } from '@headlessui/react'
+import { useState } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { menuItem } from '../../routes'

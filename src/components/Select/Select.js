@@ -1,5 +1,3 @@
-import React from 'react'
-
 const index = ({ defaultValue, children, ...rest }) => {
   return (
     <div>

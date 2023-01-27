@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io'
 import { NavLink } from 'react-router-dom'
 
-//ჩამოსაშლელი მენიუს კომპონენტი
 const SidenavItemCollapse = ({ icon, name, path, pathname, collapse }) => {
   const [collapsed, setIsCollapsed] = useState(false)
   const collapseName = pathname.split('/').slice(1)[0]

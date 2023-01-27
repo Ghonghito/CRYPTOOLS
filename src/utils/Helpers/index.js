@@ -1,4 +1,3 @@
-import Alerts from 'components/Alerts'
 import Arbitrum from 'assets/images/Blockchains/Arbitrum.svg'
 import AVAX from 'assets/images/Blockchains/Avalanche.svg'
 import BSC from 'assets/images/Blockchains/Binance.svg'
@@ -6,6 +5,7 @@ import Cronos from 'assets/images/Blockchains/Cronos.svg'
 import ETH from 'assets/images/Blockchains/Ethereum.svg'
 import FANTOM from 'assets/images/Blockchains/Fantom.svg'
 import MATIC from 'assets/images/Blockchains/Matic.svg'
+import Alerts from 'components/Alerts'
 import Avatar from 'components/Avatar'
 
 export const shortAddress = (address, length) => {
